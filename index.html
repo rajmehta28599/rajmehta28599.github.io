@@ -190,65 +190,233 @@
 					</div>
 
 				<!-- Contact -->
-					<section id="contact">
-						<div class="inner">
-							<section>
-								<form method="post" action="#">
-									<div class="fields">
-										<div class="field half">
-											<p>Have anything to share?</p>
-											<label for="name">Name</label>
-											<input type="text" name="name" id="name" />
-										</div>
-										<div class="field half">
-											<p>Fell free to shoot a message!</p>
-											<label for="email">Email</label>
-											<input type="text" name="email" id="email" />
-										</div>
-										<div class="field">
-											<label for="message">Message</label>
-											<textarea name="message" id="message" rows="6"></textarea>
-										</div>
-									</div>
-									<ul class="actions">
-										<li><a href="mailto:rajmehta28599v@gmail.com"><input type="submit" value="Send Message" class="primary" /></a></li>
-										<li><input type="reset" value="Clear" /></li>
-									</ul>
-								</form>
-							</section>
-							<section class="split">
-								<section>
-									<div class="contact-method">
-										<a href="mailto:rajmehta28599v@gmail.com" class="icon alt fa-envelope"></a>
-										<h3>Email</h3>
-										<p><a href="mailto:rajmehta28599v@gmail.com">rajmehta28599v@gmail.com</a></p>
-									</div>
-								</section>
-								<section>
-									<div class="contact-method">
-										<a href="tel:+91 9067746970" class="icon alt fa-phone"></a>
-										<h3>Phone</h3>
-										<p><a href="tel:+91 9067746970">+91 9067746970</a></p>
-									</div>
-								</section>
-								<section>
-									<div class="contact-method">
-										<a href="https://goo.gl/maps/bi4NS6JaWt5hZWC36" class="icon alt fa-home"></a>
-										<a href="https://goo.gl/maps/bi4NS6JaWt5hZWC36"><h3>Address</h3>
-										<span>Ahmedabad<br />
-										Gujarat<br />
-										India</span></a>
-									</div>
-									
-								</section>
-							</section>
+				<section id="contact">
+				    <div class="inner">
+					<section>
+					    <form id="contactForm" action="https://formspree.io/f/rajmehta28599v@gmail.com" method="POST">
+						<div class="fields">
+						    <div class="field half">
+							<p>Have anything to share?</p>
+							<label for="name">Name</label>
+							<input type="text" name="name" id="name" required />
+						    </div>
+						    <div class="field half">
+							<p>Feel free to shoot a message!</p>
+							<label for="email">Email</label>
+							<input type="email" name="email" id="email" required />
+						    </div>
+						    <div class="field">
+							<label for="message">Message</label>
+							<textarea name="message" id="message" rows="6" required></textarea>
+						    </div>
+						    <input type="hidden" name="_subject" value="New message from portfolio">
+						    <input type="hidden" name="_replyto" value="rajmehta28599v@gmail.com">
 						</div>
+						<ul class="actions">
+						    <li><input type="submit" value="Send Message" class="primary" /></li>
+						    <li><input type="reset" value="Clear" /></li>
+						</ul>
+						<div id="form-status"></div>
+					    </form>
 					</section>
-
-				<ul class="actions">
-					<li><a href="RajMehtaResume.pdf" class="button primary icon solid fa-download" download>Download Resume</a></li>
-					<li><a href="mailto:rajmehta28599v@gmail.com" class="button">Schedule Discussion</a></li>
-				</ul>
+					<section class="split">
+					    <section>
+						<div class="contact-method">
+						    <span class="icon alt fa-envelope"></span>
+						    <h3>Email</h3>
+						    <p><a href="mailto:rajmehta28599v@gmail.com">rajmehta28599v@gmail.com</a></p>
+						</div>
+					    </section>
+					    <section>
+						<div class="contact-method">
+						    <span class="icon alt fa-phone"></span>
+						    <h3>Phone</h3>
+						    <p><a href="tel:+919067746970">+91 9067746970</a></p>
+						</div>
+					    </section>
+					    <section>
+						<div class="contact-method">
+						    <span class="icon alt fa-home"></span>
+						    <h3>Address</h3>
+						    <span>Ahmedabad<br />
+						    Gujarat<br />
+						    India</span>
+						</div>
+					    </section>
+					</section>
+				    </div>
+				</section>
+				
+				<script>
+				    const form = document.getElementById('contactForm');
+				    const formStatus = document.getElementById('form-status');
+				    
+				    form.addEventListener('submit', function(e) {
+					e.preventDefault();
+					const formData = new FormData(form);
+					
+					fetch(form.action, {
+					    method: 'POST',
+					    body: formData,
+					    headers: {
+						'Accept': 'application/json'
+					    }
+					})
+					.then(response => {
+					    if (response.ok) {
+						formStatus.innerHTML = '<div class="success-message">Message sent successfully!</div>';
+						form.reset();
+					    } else {
+						throw new Error('Network response was not ok');
+					    }
+					})
+					.catch(error => {
+					    formStatus.innerHTML = '<div class="error-message">Oops! There was a problem. Please try again or email me directly.</div>';
+					});
+				    });
+				</script>
+				
+				<style>
+				    #form-status {
+					margin-top: 1rem;
+				    }
+				    
+				    .success-message {
+					color: #4CAF50;
+					padding: 0.5rem;
+					background: rgba(76, 175, 80, 0.1);
+					border-radius: 4px;
+				    }
+				    
+				    .error-message {
+					color: #F44336;
+					padding: 0.5rem;
+					background: rgba(244, 67, 54, 0.1);
+					border-radius: 4px;
+				    }
+				    
+				    .contact-method a {
+					color: inherit;
+					text-decoration: none;
+					border-bottom: 1px dotted;
+					transition: color 0.2s ease;
+				    }
+				    
+				    .contact-method a:hover {
+					color: #4fc3f7;
+					text-decoration: none;
+				    }
+				</style>
+<!-- Email Scheduling Section -->
+				<div class="email-scheduling">
+				  <h3>Let's Connect</h3>
+				  <div class="email-options">
+				    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=rajmehta28599v@gmail.com&su=Schedule%20a%20Discussion%20-%20Raj%20Mehta%20Portfolio&body=Hi%20Raj,%0A%0AI'd%20like%20to%20schedule%20a%20discussion%20about%20[please%20briefly%20describe%20purpose].%0A%0AMy%20availability:%0A[include%20your%20available%20times/days]%0A%0ALooking%20forward%20to%20connecting!" 
+				       class="gmail-button" target="_blank">
+				      <i class="fas fa-envelope"></i> Email Me Directly (Gmail)
+				    </a>
+				    
+				    <div class="alternative-options">
+				      <p>Or use another method:</p>
+				      <ul>
+				        <li>
+				          <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1wyXZQe3eD7T3r6-S7wQnWQq8XHXGX9X7X5X3X1X0X8X6X4X2X0X8X6X4X2X0" 
+				             target="_blank">
+				            <i class="fas fa-calendar-alt"></i> Book via Google Calendar
+				          </a>
+				        </li>
+				        <li>
+				          <a href="https://wa.me/919067746970?text=Hi%20Raj,%20I'd%20like%20to%20schedule%20a%20discussion%20about%20[subject]" 
+				             target="_blank">
+				            <i class="fab fa-whatsapp"></i> WhatsApp Me
+				          </a>
+				        </li>
+				      </ul>
+				    </div>
+				  </div>
+				</div>
+				
+				<style>
+				  .email-scheduling {
+				    background: rgba(255,255,255,0.05);
+				    padding: 2rem;
+				    border-radius: 8px;
+				    margin: 2rem 0;
+				    text-align: center;
+				  }
+				  
+				  .email-scheduling h3 {
+				    color: #fff;
+				    margin-bottom: 1.5rem;
+				  }
+				  
+				  .gmail-button {
+				    display: inline-block;
+				    background: #d44638; /* Gmail red */
+				    color: white !important;
+				    padding: 12px 24px;
+				    border-radius: 4px;
+				    font-weight: 500;
+				    text-decoration: none;
+				    transition: all 0.3s ease;
+				    margin-bottom: 1.5rem;
+				  }
+				  
+				  .gmail-button:hover {
+				    background: #b33629;
+				    transform: translateY(-2px);
+				    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+				  }
+				  
+				  .gmail-button i {
+				    margin-right: 8px;
+				  }
+				  
+				  .alternative-options {
+				    margin-top: 1.5rem;
+				  }
+				  
+				  .alternative-options p {
+				    color: #aaa;
+				    margin-bottom: 1rem;
+				  }
+				  
+				  .alternative-options ul {
+				    list-style: none;
+				    padding: 0;
+				    display: flex;
+				    justify-content: center;
+				    gap: 1rem;
+				    flex-wrap: wrap;
+				  }
+				  
+				  .alternative-options li a {
+				    color: #4fc3f7;
+				    text-decoration: none;
+				    display: flex;
+				    align-items: center;
+				    gap: 6px;
+				    transition: color 0.3s ease;
+				  }
+				  
+				  .alternative-options li a:hover {
+				    color: #81d4fa;
+				    text-decoration: underline;
+				  }
+				  
+				  @media (max-width: 600px) {
+				    .gmail-button {
+				      padding: 10px 18px;
+				      font-size: 0.9rem;
+				    }
+				    
+				    .alternative-options ul {
+				      flex-direction: column;
+				      align-items: center;
+				      gap: 0.5rem;
+				    }
+				  }
+				</style>
 
 				<!-- Footer -->
 					<footer id="footer">
